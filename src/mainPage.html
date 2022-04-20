@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/src/lib/bootstrap-5.1.3/bootstrap.min.css">
+    <script src="/src/lib/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+    
+    <script src="/src/lib/angular/angular.min.js"></script>
+    
+    <script>
+        var app1 = angular.module("app1", []);
+        var projObjs = [
+            {
+                dataId: 'p1',
+                title: 'AWP mini project',
+                info: 'Select domain and develop a website using HTML, CSS, AngularJS, NodeJs, MongoDB',
+                due_date: new Date('2022-04-27')
+            },
+            {
+                dataId: 'p2',
+                title: 'Design Engineering project',
+                info: 'develop a website using MERN stack on the selected topic, curent topic is Financial Dashboard',
+                due_date: new Date('2022-04-30')
+            }
+        ]
+        var tmpData;
+    </script>
+    <script src="appControllers"></script>
+    <script src="appServices"></script>
+
+    <title>TPM-Task & Project Manager</title>
+    <style>
+        body{
+            overflow: hidden;
+        }
+        .itemList{
+            max-height: 98vh;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+        .ToggleButton{
+            font-size: 32px;
+            vertical-align: bottom;
+            background-color: transparent;
+            border: 0;
+        }
+        .Choice{
+            color: black;
+            background-color: transparent;
+            font-size: 18px;
+            border: 0;
+            transition: .25 s;
+        }
+        .activeChoice{
+            color: white;
+            background-color: black;
+            font-size: 18px;
+            border: 0;
+        }
+        .dataTab{
+            cursor: pointer;
+            font-size: 18px;
+            padding: 10px 10px;
+            background: transparent;
+        }
+        .dataTab:hover{
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .activeDataTab{
+            cursor: pointer;
+            font-size: 18px;
+            padding: 10px 10px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .newTask{
+            content: "";
+            width: 100%;
+            height: 100%;
+        }
+        .newTask::before{
+            content: "";
+            width: 100%;
+            height: 100%;
+            display: block;
+            /* background:red; */
+            background:rgba(0, 0, 0, 0.3);
+            filter:blur(10px);
+        }
+        .newTaskForm{
+            padding: 2% 7%;
+            border: 1px solid black;
+            background: white;
+            border-radius: 1%;
+        }
+    </style>
+</head>
+
+<body class="bg-opacity-75" ng-app="app1">
+    <nav class="navbar py-0 navbar-expand-sm bg-warning navbar-light">
+        <div class="container-fluid text-start">
+            <div>
+                <p class="d-inline-block m-0" style="font-size: 24px;">Task & Project Manager</p>
+            </div>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Create new</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" ng-click="newTask = true">Task</a></li>
+                        <li><a class="dropdown-item" href="#">Project</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link material-icons" href="#">settings</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><span class="material-icons">account_circle</span><span class="align-top">User name</span></a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="newTask position-absolute top-0 start-0" ng-show="newTask">
+        <div class="position-absolute top-50 start-50 translate-middle newTaskForm" ng-show="currentSelected == null" ng-include="'src/templates/newTask.htm'"></div>
+    </div>
+    <div class="row mx-0" style="height: 98.5vh;">
+        <div class="col-3 border-end border-dark bg-white" ng-controller="dataListCTR">
+            <div class="row">
+                    <button class="col" ng-class="sChoice1 ? 'activeChoice': 'Choice'" ng-click="choiceClicked(1, this); sChoice1 = true; sChoice2 = false">Tasks</button>
+                    <button class="col" ng-class="sChoice2 ? 'activeChoice': 'Choice'" ng-click="choiceClicked(2, this); sChoice1 = false; sChoice2 = true">Projects</button>
+                    <ul class="list-unstyled p-0 itemList">
+                        <li class="text-left border-top" ng-class="currentSelected.dataId==task.dataId ? 'activeDataTab': 'dataTab'" ng-show="sChoice1" ng-click="itemClicked('task', task.dataId)" ng-repeat="task in taskList">{{task.title}}</li>
+                        <li class="text-left border-top" ng-class="currentSelected.dataId==proj.dataId ? 'activeDataTab': 'dataTab'" ng-show="sChoice2" ng-click="itemClicked('proj', proj.dataId)" ng-repeat="proj in projList">{{proj.title}}</li>
+                    </ul>
+            </div>
+        </div>
+        <div class="col">
+            <div class="container-fluid">
+                <!-- Div to show if no task/project selected or available to display -->
+                <div class="" ng-show="currentSelected == null">
+                    <p>Select any task or project to see details about it.</p>
+                </div>
+                <!-- This div of selected task or project detail will be displayed if any selected-->
+                <div ng-show="currentSelected != null">
+                    <p class="display-6">{{currentSelected.dataId}}. {{currentSelected.title}}</p>
+                    <dl>
+                        <dt>Description:</dt>
+                        <dd>{{currentSelected.info}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>Due date:</dt>
+                        <dd>{{currentSelected.due_date}}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+</html>

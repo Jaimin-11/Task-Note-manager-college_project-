@@ -1,11 +1,18 @@
 {
   "name": "mini_project",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Notes & Task management project",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "jaimin",
+  "license": "ISC",
+  "dependencies": {
+    "angularjs": "^0.0.1",
+    "bootstrap": "^5.1.3",
+    "express": "^4.17.3",
+    "mongodb": "^4.5.0"
+  }
 }
