@@ -1,11 +1,11 @@
 <form novalidate ng-controller="newTaskCTR">
     <p class="h1 text-center">New Task details</p>
-    <p class="position-absolute material-icons" style="cursor: pointer;; top: 2%; right: 2%;" ng-click="newTask = false">close</p>
+    <p class="position-absolute material-icons" style="cursor: pointer;; top: 2%; right: 2%;" ng-click="closeForm()">close</p>
     <p>Enter Task title: 
         <input type="text" ng-model="newTask.title">
     </p>
     <p>Description: 
-        <textarea name="info" cols="50" rows="10" ng-model="newTask.info"></textarea>
+        <textarea name="info" cols="50" rows="10" ng-model="newTask.details"></textarea>
     </p>
     <p>Enter due date: 
         <input type="date" ng-model="newTask.due_date">
