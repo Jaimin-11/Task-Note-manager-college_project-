@@ -5,6 +5,10 @@ app1.controller("newTaskCTR", function($scope, $rootScope, $http){
         "due_date": null,
         "isDone": false
     };
+    
+    $scope.closeForm = function(){
+        $rootScope.entry_newTask = false;
+    }
 
     $scope.addNewTask = function(){
         $http.post('/add_task', {newTask:$scope.newTask})
@@ -17,7 +21,4 @@ app1.controller("newTaskCTR", function($scope, $rootScope, $http){
         $scope.closeForm();
     };
 
-    $scope.closeForm = function(){
-        $rootScope.entry_newTask = false;
-    }
 });

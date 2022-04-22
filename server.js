@@ -21,7 +21,7 @@ app.post('/get_userData', (req, res)=>{
       dbo.collection("mini_project_db").findOne({userId: req.body.userId, userName: req.body.userName}, (err, result)=>{
         if (err) throw err;
         db.close();
-        res.json(result.data);
+        res.json(result);
       });
     });
 });
@@ -30,10 +30,12 @@ app.post('/add_task', (req, res)=>{
     MongoClient.connect(url, (err, db)=>{
       if (err) throw err;
       var dbo = db.db("AWP");
-      var query1 = { userId: req.body.userId, userName: req.body.userName };
-      var newValue = { $push: { 'data.$.tasks': req.body.newTask } };
-      dbo.collection("mini_project_db").updateOne(query1, newValue, (err, result)=>{
+      console.log(req.body.userName);
+      var query1 = { "userName": req.body.userName };
+      var newValue = { $push: { "tasks": req.body.newTask } };
+      dbo.collection("mini_project_db").updateOne( query1, newValue,  (err, result)=>{
         if (err) throw err;
+        console.log(result);
         db.close();
       });
     });

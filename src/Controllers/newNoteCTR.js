@@ -1,11 +1,11 @@
-app1.controller("newTaskCTR", function($scope, $rootScope, $http){
+app1.controller("newNoteCTR", function($scope, $rootScope, $http){
     $scope.newNote = {
         "title": null,
         "details": null,
     };
 
-    $scope.addNewTask = function(){
-        $http.post('/add_task', {newTask:$scope.newTask})
+    $scope.addNewNote = function(){
+        $http.post('/add_Note', {newTask:$scope.newNote})
         .then(function (response) {
             console.log(response);
         },function(err){
