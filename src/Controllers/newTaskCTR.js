@@ -11,14 +11,14 @@ app1.controller("newTaskCTR", function($scope, $rootScope, $http){
     }
 
     $scope.addNewTask = function(){
-        $http.post('/add_task', {newTask:$scope.newTask})
+        $http.post('/add_task', {userName: $rootScope.userName, newTask:$scope.newTask})
         .then(function (response) {
             console.log(response);
         },function(err){
             if (err) throw err;
         });
-        alert("Data inserted successfully!");
         $scope.closeForm();
+        alert("Data inserted successfully!");
     };
 
 });

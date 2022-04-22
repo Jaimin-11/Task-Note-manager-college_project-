@@ -1,15 +1,14 @@
-app1.controller("dataListCTR", function($scope, $rootScope, $http){
+app1.controller("dataListCTR", function($scope, $rootScope, $http, db_services){
     
-  
-    $scope.noteList;
-    $scope.taskList;
-    $http.post('/get_userData', {userName:$rootScope.userName, userId:$rootScope.userId})
-        .then(function (response) {
-            var data = JSON.parse(JSON.stringify(response.data));
-            $scope.taskList = data.tasks;
-            $scope.noteList = data.notes;
-
-        });
+    $scope.data = db_services.sync_data();
+    $scope.taskList = $scope.data.tasks;
+    $scope.noteList = $scope.data.notes; 
+    // $http.post('/get_userData', {userName:$rootScope.userName, userId:$rootScope.userId})
+    //     .then(function (response) {
+    //         var data = JSON.parse(JSON.stringify(response.data));
+    //         $scope.taskList = data.tasks;
+    //         $scope.noteList = data.notes;
+    //     });
         
     $scope.choiceClicked = function(v, b){
         if(v==1){

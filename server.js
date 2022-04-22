@@ -30,9 +30,9 @@ app.post('/add_task', (req, res)=>{
     MongoClient.connect(url, (err, db)=>{
       if (err) throw err;
       var dbo = db.db("AWP");
-      console.log(req.body.userName);
+      console.log(req.body);
       var query1 = { "userName": req.body.userName };
-      var newValue = { $push: { "tasks": req.body.newTask } };
+      var newValue = { "$push": { "tasks": req.body.newTask } };
       dbo.collection("mini_project_db").updateOne( query1, newValue,  (err, result)=>{
         if (err) throw err;
         console.log(result);
