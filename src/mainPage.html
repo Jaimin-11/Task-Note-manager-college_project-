@@ -15,12 +15,13 @@
     <script src="/src/lib/angular/angular.min.js"></script>
 
     <script src="/src/app/app.js"></script>
-    
-    <script src="/src/app/services.js"></script>
 
-    <script src="/src/Controllers/dataListCTR.js"></script>
-    <script src="/src/Controllers/newTaskCTR.js"></script>
-    <script src="/src/Controllers/newNoteCTR.js"></script>
+    <script src="/src/Controllers/mainCTR.js"></script>
+    <script src="/src/Controllers/descCTR.js"></script>
+    <script src="/src/Controllers/editCTR.js"></script>
+    <script src="/src/Controllers/newDataCTR.js"></script>
+    <script src="/src/Controllers/aboutUsCTR.js"></script>
+
 
     <title>Task & Notes Manager</title>
     <link rel="stylesheet" href="/src/css/mainPage.css">
@@ -33,11 +34,12 @@
                 <p class="d-inline-block m-0" style="font-size: 24px;">Task & Notes Manager</p>
             </div>
             <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="#" ng-click="aboutUs = true">About us</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Create new</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" ng-click="entry_newTask = true">Task</a></li>
-                        <li><a class="dropdown-item" href="#" ng-click="entry_newNote = true">Notes</a></li>
+                        <li><a class="dropdown-item" href="#" ng-click="entry_newData = 'data'">Task</a></li>
+                        <li><a class="dropdown-item" href="#" ng-click="entry_newData = 'note'">Notes</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link material-icons" href="#">settings</a></li>
@@ -45,53 +47,35 @@
             </ul>
         </div>
     </nav>
-    <div class="newTask position-absolute top-0 start-0" ng-show="entry_newTask">
-        <div class="position-absolute top-50 start-50 translate-middle newTaskForm" ng-include="'src/templates/newTask.htm'"></div>
+    
+    
+    <div class="newData position-absolute top-0 start-0" ng-show="aboutUs == true">
+        <div class="position-absolute top-50 start-50 translate-middle newDataForm" ng-include="'src/templates/aboutUs.htm'"></div>
     </div>
-    <div class="newTask position-absolute top-0 start-0" ng-show="entry_newNote">
-        <div class="position-absolute top-50 start-50 translate-middle newTaskForm" ng-include="'src/templates/newNote.htm'"></div>
-    </div>
-    <div class="row mx-0" style="height: 98.5vh;" ng-controller="dataListCTR">
+    
+    <!-- Main part -->
+    <div class="row mx-0" style="height: 98.5vh;" ng-controller="mainCTR">
+        <div class="newData position-absolute top-0 start-0" ng-show="entry_newData != null">
+            <div class="position-absolute top-50 start-50 translate-middle newDataForm" ng-include="'src/templates/newData.htm'"></div>
+        </div>
+        
         <div class="col-3 border-end border-dark bg-white">
             <div class="row">
                     <button class="col" ng-class="sChoice1 ? 'activeChoice': 'Choice'" ng-click="choiceClicked(1, this); sChoice1 = true; sChoice2 = false">Tasks</button>
                     <button class="col" ng-class="sChoice2 ? 'activeChoice': 'Choice'" ng-click="choiceClicked(2, this); sChoice1 = false; sChoice2 = true">Notes</button>
                     <ul class="list-unstyled p-0 itemList">
-                        <li class="text-left border-top" ng-class="currentSelected.title==task.title ? 'activeDataTab': 'dataTab'" ng-show="sChoice1" ng-click="itemClicked('task', task.title)" ng-repeat="task in taskList track by $index">
+                        <li class="text-left border-top" ng-class="currentSelected.title==task.title ? 'activeDataTab': 'dataTab'" ng-show="sChoice1" ng-click="itemClicked('task', task.title, $index)" ng-repeat="task in taskList track by $index">
                             {{$index+1}}. {{task.title}} 
                             <span ng-show="task.isDone" class="material-icons text-success">done</span>
                         </li>
-                        <li class="text-left border-top" ng-class="currentSelected.title==note.title ? 'activeDataTab': 'dataTab'" ng-show="sChoice2" ng-click="itemClicked('note', note.title)" ng-repeat="note in noteList track by $index">
+                        <li class="text-left border-top" ng-class="currentSelected.title==note.title ? 'activeDataTab': 'dataTab'" ng-show="sChoice2" ng-click="itemClicked('note', note.title, $index)" ng-repeat="note in noteList track by $index">
                             {{$index+1}}. {{note.title}}
                         </li>
                     </ul>
             </div>
         </div>
-        <div class="col">
-            <div class="container-fluid">
-                <!-- Div to show if no task/Notes selected or available to display -->
-                <div class="" ng-show="currentSelected == null">
-                    <p>Select any task or project to see details about it.</p>
-                </div>
-                <!-- This div of selected task or project detail will be displayed if any selected-->
-                <div ng-show="currentSelected != null">
-                    <p class="display-6">{{$index+1}}. {{currentSelected.title}}</p>
-                    <dl>
-                        <dt>Description:</dt>
-                        <dd>{{currentSelected.details}}</dd>
-                    </dl>
-                    <dl ng-show="currentSelected.due_date!=null">
-                        <dt>Due date:</dt>
-                        <dd ng-bind="currentSelected.due_date | date:'MM/dd/yyyy'"></dd>
-                    </dl>
-                    <dl ng-show="currentSelected.isDone!=null">
-                        <dt>Status:</dt>
-                        <dd ng-bind="currentSelected.isDone? 'Completed':'Not completed'">
-                        </dd>
-                        <button ng-show="!currentSelected.isDone" ng-click="markDone()">Mark as completed</button>
-                    </dl>
-                </div>
-            </div>
+        <div class="col" ng-include="'src/templates/description.htm'"></div>
+            <!-- Description template with decsCTR-->
         </div>
     </div>
     

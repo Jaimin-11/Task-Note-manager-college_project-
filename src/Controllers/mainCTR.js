@@ -1,18 +1,22 @@
-app1.controller("dataListCTR", function($scope, $rootScope, $http, db_services){
+app1.controller("mainCTR", function($scope, $rootScope, $http){
     
-    $scope.data = db_services.sync_data();
-    $scope.taskList = $scope.data.tasks;
-    $scope.noteList = $scope.data.notes; 
-    // $http.post('/get_userData', {userName:$rootScope.userName, userId:$rootScope.userId})
-    //     .then(function (response) {
-    //         var data = JSON.parse(JSON.stringify(response.data));
-    //         $scope.taskList = data.tasks;
-    //         $scope.noteList = data.notes;
-    //     });
+    $scope.initialFun = function(){
+        $http.post('/get_userData', {userName:$rootScope.userName, userId:$rootScope.userId})
+            .then(function (response) {
+                var data = response.data;
+                $scope.taskList = data.tasks;
+                $scope.noteList = data.notes;
+            });
+    }
+
+    // To communicat with child controllers
+    $scope.$on("sync data now", function(){
+        $scope.initialFun();
+    });
         
     $scope.choiceClicked = function(v, b){
         if(v==1){
-            $scope.currentList =  $scope.taskList;
+            $scope.currentList =  $scope.taskList;            
             $scope.sChoice1 = true;
             $scope.sChoice2 = false;
         }
@@ -22,10 +26,8 @@ app1.controller("dataListCTR", function($scope, $rootScope, $http, db_services){
             $scope.sChoice2 = true;
         }
     }
-    $scope.markDone = function(){
-        $scope.currentSelected.isDone = true;
-    }
-    $scope.itemClicked = function(type, title){
+    
+    $scope.itemClicked = function(type, title, index){
         if(type=='task'){
             $rootScope.currentSelected = $scope.taskList.filter(function(el){
                 if (el.title == title){
@@ -33,6 +35,8 @@ app1.controller("dataListCTR", function($scope, $rootScope, $http, db_services){
                 }
                 // [0] is written because, filter function return array of elements and
             })[0];
+            $rootScope.currentSelected.type = 'task';
+            $rootScope.currentSelected.index = index;
         }
         else if(type=='note'){
             $rootScope.currentSelected = $scope.noteList.filter(function(el){
@@ -41,7 +45,10 @@ app1.controller("dataListCTR", function($scope, $rootScope, $http, db_services){
                 }
                 // [0] is written because, filter function return array of elements and
             })[0];
+            $rootScope.currentSelected.type = 'note';
+            $rootScope.currentSelected.index = index;
         }
     }
     $scope.choiceClicked(1);
+    $scope.initialFun();
 });

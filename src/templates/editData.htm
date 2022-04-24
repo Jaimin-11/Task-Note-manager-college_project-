@@ -1,0 +1,31 @@
+<div class="newData position-absolute top-0 start-0">
+    <div class="position-absolute top-50 start-50 translate-middle newDataForm">
+        <form novalidate ng-controller="editCTR">
+            <div ng-show="$parent.editType  == 'task'">
+                <p class="h1 text-center">Update Task data</p>
+                <p class="position-absolute material-icons" style="cursor: pointer;; top: 2%; right: 2%;" ng-click="closeForm()">close</p>
+                <p>Enter Task title: 
+                    <input type="text" ng-value="$parent.newData.title" ng-model="newData.title">
+                </p>
+                <p>Description: 
+                    <textarea name="info" cols="50" rows="10" ng-value="$parent.newData.details" ng-model="newData.details"></textarea>
+                </p>
+                <p>Enter due date: 
+                    <input type="date" ng-value="$parent.newData.due_date | date:'yyyy-MM-dd'" ng-model="newData.due_date">
+                </p>
+                <button ng-click="updateData('task')">Update</button>
+            </div>
+            <div ng-show="$parent.editType == 'note'">
+                <p class="h1 text-center">Update note data</p>
+                <p class="position-absolute material-icons" style="cursor: pointer;; top: 2%; right: 2%;" ng-click="closeForm()">close</p>
+                <p>Enter Task title: 
+                    <input type="text" ng-value="$parent.newData.title" ng-model="newData.title" >
+                </p>
+                <p>Description: 
+                    <textarea name="info" cols="50" rows="10" ng-value="$parent.newData.details" ng-model="newData.details"></textarea>
+                </p>
+                <button ng-click="updateData('note')">Update</button>
+            </div>
+        </form>
+    </div>
+</div>

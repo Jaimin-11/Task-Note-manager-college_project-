@@ -3,11 +3,12 @@ var userName = 'Jaimin';
 var userId = 1;
 
 app1.run(function($rootScope) {
+    $rootScope.aboutUs = false;
     $rootScope.currentSelected = null;
+    $rootScope.entry_dataChange = false;
+    $rootScope.entry_newData = null;
     $rootScope.entry_newTask = false;
     $rootScope.entry_newNote = false;
     $rootScope.userName = "Jaimin";
     $rootScope.userId = 1;
-    $rootScope.total_tasks = 0;
-    $rootScope.total_notes = 0;
 });

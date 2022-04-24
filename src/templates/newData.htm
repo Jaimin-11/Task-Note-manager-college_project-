@@ -1,0 +1,35 @@
+<div class="newData position-absolute top-0 start-0">
+    <div class="position-absolute top-50 start-50 translate-middle newDataForm">
+        <form novalidate ng-controller="newDataCTR">
+            <div ng-show="entry_newData == 'data'">
+                <p class="h1 text-center">New Task details</p>
+                <p class="position-absolute material-icons" style="cursor: pointer;; top: 2%; right: 2%;"
+                    ng-click="closeForm()">close</p>
+                <p>Enter Task title:
+                    <input type="text" ng-model="newData.title" required>
+                </p>
+                <p>Description:
+                    <textarea name="info" cols="50" rows="10" ng-model="newData.details"></textarea>
+                </p>
+                <p>Enter due date:
+                    <input type="date" ng-model="newData.due_date">
+                </p>
+                <input type="reset">
+                <button ng-click="addNewData('task')">Add</button>
+            </div>
+            <div ng-show="entry_newData == 'note'">
+                <p class="h1 text-center">New Note details</p>
+                <p class="position-absolute material-icons" style="cursor: pointer;; top: 2%; right: 2%;"
+                    ng-click="closeForm()">close</p>
+                <p>Enter Task title:
+                    <input type="text" ng-model="newData.title">
+                </p>
+                <p>Description:
+                    <textarea name="info" cols="50" rows="10" ng-model="newData.details"></textarea>
+                </p>
+                <input type="reset">
+                <button ng-click="addNewData('note')">Add</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="container-fluid" ng-controller="descCTR">
+    <!-- Div to show if no task/Notes selected or available to display -->
+    <div class="" ng-show="currentSelected == null">
+        <p>Select any task or project to see details about it.</p>
+    </div>
+    <!-- This div of selected task or project detail will be displayed if any selected-->
+    <div ng-show="currentSelected != null">
+        <p class="position-absolute material-icons display-6" style="cursor: pointer;; top: 7%; right: 6%;"
+            ng-click="edit(currentSelected.type)">edit</p>
+        <p class="position-absolute material-icons display-6" style="cursor: pointer;; top: 7%; right: 2%;"
+            ng-click="delete(currentSelected.type, currentSelected.title)">delete_forever</p>
+        <p class="display-6">{{currentSelected.index + 1}}. {{currentSelected.title}}</p>
+        <dl>
+            <dt>Description:</dt>
+            <dd>{{currentSelected.details}}</dd>
+        </dl>
+        <dl ng-show="currentSelected.due_date!=null">
+            <dt>Due date:</dt>
+            <dd ng-bind="currentSelected.due_date | date:'dd/MM/yyyy'"></dd>
+        </dl>
+        <dl ng-show="currentSelected.isDone!=null">
+            <dt>Status:</dt>
+            <dd ng-bind="currentSelected.isDone? 'Completed':'Not completed'">
+            </dd>
+            <button ng-show="!currentSelected.isDone" ng-click="markDone()">Mark as completed</button>
+        </dl>
+        <div ng-show="entry_dataChange == true" ng-include="'src/templates/editData.htm'"></div>
+    </div>
+</div>
