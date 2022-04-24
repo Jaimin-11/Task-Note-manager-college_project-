@@ -9,6 +9,7 @@ app1.run(function($rootScope) {
     $rootScope.entry_newData = null;
     $rootScope.entry_newTask = false;
     $rootScope.entry_newNote = false;
-    $rootScope.userName = "Jaimin";
-    $rootScope.userId = 1;
+    $rootScope.userName = null;
+    $rootScope.userId = null;
+
 });

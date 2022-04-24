@@ -12,6 +12,21 @@ app.get('/', (req, res)=>{
     res.sendFile(__dirname+"/src/mainPage.html");
 });
 
+app.post('/login', (req, res)=>{
+  MongoClient.connect(url, (err, db)=>{
+    if (err) throw err;
+    var dbo = db.db("AWP");
+    console.log(req.body);
+    var query1 = {"USERS": {"$elemMatch": {"userName": req.body.userName, "password": req.body.password}}};
+    // dbo.collection("mini_project_auth").find({query1}, (err, result)=>{
+    dbo.collection("mini_project_auth").findOne({"USERS": {"$elemMatch": {"userName": req.body.userName, "password": req.body.password}}}, (err, result)=>{
+      if (err) throw err;
+      db.close();
+      res.json(result.USERS[0]);
+    });
+  });
+})
+
 app.post('/get_userData', (req, res)=>{
     MongoClient.connect(url, (err, db)=>{
       if (err) throw err;

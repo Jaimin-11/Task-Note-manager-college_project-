@@ -1,0 +1,11 @@
+<form novalidate ng-controller="authCTR">
+    <p class="h1 text-center">Login</p>
+    <p>Enter user name:
+        <input type="text" ng-model="userName" required>
+    </p>
+    <p>Enter password:
+        <input type="password" ng-model="password" required>
+    </p>
+    <input type="reset">
+    <button ng-click="login()">Login</button>
+</form>

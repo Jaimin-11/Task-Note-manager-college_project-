@@ -17,6 +17,7 @@
     <script src="/src/app/app.js"></script>
 
     <script src="/src/Controllers/mainCTR.js"></script>
+    <script src="/src/Controllers/authCTR.js"></script>
     <script src="/src/Controllers/descCTR.js"></script>
     <script src="/src/Controllers/editCTR.js"></script>
     <script src="/src/Controllers/newDataCTR.js"></script>
@@ -28,6 +29,8 @@
 </head>
 
 <body class="bg-opacity-75" ng-app="app1">
+    
+    
     <nav class="navbar py-0 navbar-expand-sm bg-warning navbar-light">
         <div class="container-fluid text-start">
             <div>
@@ -55,6 +58,10 @@
     
     <!-- Main part -->
     <div class="row mx-0" style="height: 98.5vh;" ng-controller="mainCTR">
+        <!-- Login signup page -->
+        <div class="newData position-absolute top-0 start-0" ng-show="userName == null">
+            <div class="position-absolute top-50 start-50 translate-middle newDataForm" ng-include="'src/templates/login_signup.htm'"></div>
+        </div>
         <div class="newData position-absolute top-0 start-0" ng-show="entry_newData != null">
             <div class="position-absolute top-50 start-50 translate-middle newDataForm" ng-include="'src/templates/newData.htm'"></div>
         </div>

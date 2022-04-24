@@ -7,11 +7,13 @@ app1.controller("mainCTR", function($scope, $rootScope, $http){
                 $scope.taskList = data.tasks;
                 $scope.noteList = data.notes;
             });
+        console.log("and riched here", $scope.taskList);
     }
-
+    
     // To communicat with child controllers
     $scope.$on("sync data now", function(){
         $scope.initialFun();
+        $scope.choiceClicked(1);
     });
         
     $scope.choiceClicked = function(v, b){
@@ -49,6 +51,5 @@ app1.controller("mainCTR", function($scope, $rootScope, $http){
             $rootScope.currentSelected.index = index;
         }
     }
-    $scope.choiceClicked(1);
-    $scope.initialFun();
+    
 });
